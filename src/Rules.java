@@ -46,7 +46,7 @@ public class Rules {
         int num1;
         int num2;
        System.out.println("You need select a positive number and < " + (num + 1));
-       System.out.println("press 911 to learn the rules");
+       System.out.println("press 911 to learn the rules or 0 for exit");
        for (int i = 0; i < 128; i++) {
             System.out.println("Enter your move: №" + (i + 1));
             if(scanner.hasNextInt()) {
