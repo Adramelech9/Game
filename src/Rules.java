@@ -36,9 +36,9 @@ public class Rules {
         return num;
     }
     public static String getSteps() {
-        String id = RandomKey.getSeq();
-        System.out.println(id);
-        return id;
+        String key = RandomKey.getKey();
+        System.out.println(key);
+        return key;
     }
 
    static String playRound() {

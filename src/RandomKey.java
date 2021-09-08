@@ -10,8 +10,8 @@ public class RandomKey {
     private static int[] sequence = new int [128];
     private static String key = "";
 
-    public static String getSeq() {
-        return seq;
+    public static String getKey() {
+        return key;
     }
 
     public static int[] getSequence() {
