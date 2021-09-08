@@ -35,19 +35,15 @@ public class Rules {
         }
         return num;
     }
-    public static String getSteps() {
-        String key = RandomKey.getKey();
-        System.out.println(key);
-        return key;
-    }
 
-   static String playRound() {
+   static String playRound() throws NoSuchAlgorithmException, InvalidKeyException {
         int numUser;
         int num1;
         int num2;
-       System.out.println("You need select a positive number and < " + (num + 1));
-       System.out.println("press 911 to learn the rules or 0 for exit");
-       for (int i = 0; i < 128; i++) {
+        System.out.println("You need select a positive number and < " + (num + 1));
+        System.out.println("press 911 to learn the rules or 0 for exit");
+        for (int i = 0; i < 128; i++) {
+            new RandomKey(i, 1);
             System.out.println("Enter your move: №" + (i + 1));
             if(scanner.hasNextInt()) {
 
@@ -87,7 +83,9 @@ public class Rules {
                 continue;
             }
             if (numUser == sequence[i]) {
-                System.out.println("draw");
+                System.out.println("draw, PC chose " + sequence[i]);
+                System.out.println("Key: " + RandomKey.getKey());
+                System.out.println("---------------");
                 draws++;
                 continue;
             } if (numUser - sequence[i] > num / 2 || sequence[i] - numUser > num / 2) {
@@ -105,6 +103,9 @@ public class Rules {
                 System.out.println("You win!");
             }
             System.out.println("You selected " + numUser + ", PC " + sequence[i]);
+            System.out.println("Key: " + RandomKey.getKey());
+            System.out.println("---------------");
+
         }
         System.out.println("score: " + countUser + " WINS | " + countPC + " LOSE | " + draws + " DRAWS");
          return "";

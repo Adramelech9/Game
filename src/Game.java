@@ -8,7 +8,5 @@ public class Game {
 
         new Rules();
         Rules.playRound();
-        System.out.print("key: ");
-        Rules.getSteps();
     }
 }

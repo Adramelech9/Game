@@ -17,6 +17,12 @@ public class RandomKey {
     public static int[] getSequence() {
         return sequence;
     }
+    RandomKey(int i, int a) throws NoSuchAlgorithmException, InvalidKeyException {
+        SecureRandom random = new SecureRandom();
+        this.key += random.nextInt();
+        String seq = String.valueOf(sequence[i]);
+        randomHMAC(key, seq);
+    }
 
     RandomKey(int num) throws NoSuchAlgorithmException, InvalidKeyException {
         SecureRandom random = new SecureRandom();
@@ -25,9 +31,13 @@ public class RandomKey {
         for (int i = 0; i < 128; i++) {
             this.sequence[i] = random.nextInt(num) + 1;
             this.seq += sequence[i];
-            key += random2.nextInt(9);
+            this.key += random2.nextInt( 9);
         }
+        System.out.print("HMAC on this game: ");
+        randomHMAC(key, seq);
+    }
 
+    public static int randomHMAC(String key, String seq) throws NoSuchAlgorithmException, InvalidKeyException {
         final Charset asciiCs = Charset.forName("US-ASCII");
         final Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         final SecretKeySpec secret_key = new javax.crypto.spec.SecretKeySpec(asciiCs.encode(key).array(), "HmacSHA256");
@@ -38,7 +48,7 @@ public class RandomKey {
         {
             result += Integer.toString((element & 0xff) + 0x100, 16).substring(1);
         }
-        System.out.println("HMAC: " + result);
-
+        System.out.println(result);
+        return 1;
     }
 }
