@@ -9,6 +9,7 @@ public class RandomKey {
     private static String seq = "";
     private static int[] sequence = new int [128];
     private static String key = "";
+    byte bytes[] = new byte[128/8];
 
     public static String getKey() {
         return key;
@@ -19,19 +20,25 @@ public class RandomKey {
     }
     RandomKey(int i, int a) throws NoSuchAlgorithmException, InvalidKeyException {
         SecureRandom random = new SecureRandom();
-        byte bytes[] = new byte[128/8];
+        this.bytes = new byte[128/8];
         random.nextBytes(bytes);
-        this.key = String.valueOf(bytes);
+        this.key = "";
+        for (int j = 0; j < bytes.length; j++) {
+            key += bytes[j];
+        }
         String seq = String.valueOf(sequence[i]);
         randomHMAC(key, seq);
     }
 
     RandomKey(int num) {
         SecureRandom random = new SecureRandom();
+        random.nextBytes(bytes);
+        for (int i = 0; i < bytes.length; i++) {
+            key += bytes[i];
+        }
         for (int i = 0; i < 128; i++) {
             this.sequence[i] = random.nextInt(num) + 1;
             this.seq += sequence[i];
-            this.key = String.valueOf(new byte[128/8]);
         }
     }
 
