@@ -11,17 +11,22 @@ public class Rules {
     private static int[] sequence = RandomKey.getSequence();
     private static int num;
 
-    Rules() throws NoSuchAlgorithmException, InvalidKeyException {
+    Rules(String num) throws NoSuchAlgorithmException, InvalidKeyException {
 
-        System.out.println("Enter an odd number of possible combinations");
-        this.num = getInt();
-        while (num < 3 || num % 2 != 1 || num > 9) {
-            if (num < 3) System.out.println("The number must be at least 3");
-            if (num % 2 != 1) System.out.println("Error. Enter an odd number");
-            if (num > 9) System.out.println("The number must be no more than 9");
-            num = getInt();
+        try {
+            this.num = Integer.parseInt(num);
+        } catch (NumberFormatException e) {
+            System.out.println("You made a mistake entering the number. Try again.");
+            this.num = getInt();
         }
-        new RandomKey(num);
+        System.out.println("Enter an odd number of possible combinations");
+        while (this.num < 3 || this.num % 2 != 1 || this.num > 9) {
+            if (this.num < 3) System.out.println("The number must be at least 3");
+            if (this.num % 2 != 1) System.out.println("Error. Enter an odd number");
+            if (this.num > 9) System.out.println("The number must be no more than 9");
+            this.num = getInt();
+        }
+        new RandomKey(this.num);
     }
     public static int getInt(){
         int num;
@@ -68,7 +73,7 @@ public class Rules {
                     i--;
                     continue;
                 }
-            if (numUser < 0 || numUser > num) {
+            if (numUser < 0 || numUser > num ) {
                 System.out.println("try again");
                 numUser = getInt();
                 if (numUser < 0 || numUser > num) {

@@ -6,7 +6,7 @@ public class Game {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
 
-        new Rules();
+        new Rules(args[0]);
         Rules.playRound();
     }
 }
