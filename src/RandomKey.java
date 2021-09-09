@@ -19,19 +19,19 @@ public class RandomKey {
     }
     RandomKey(int i, int a) throws NoSuchAlgorithmException, InvalidKeyException {
         SecureRandom random = new SecureRandom();
-        this.key += random.nextInt();
+        byte bytes[] = new byte[128/8];
+        random.nextBytes(bytes);
+        this.key = String.valueOf(bytes);
         String seq = String.valueOf(sequence[i]);
         randomHMAC(key, seq);
     }
 
     RandomKey(int num) {
         SecureRandom random = new SecureRandom();
-        SecureRandom random2 = new SecureRandom();
-
         for (int i = 0; i < 128; i++) {
             this.sequence[i] = random.nextInt(num) + 1;
             this.seq += sequence[i];
-            this.key += random2.nextInt( 9);
+            this.key = String.valueOf(new byte[128/8]);
         }
     }
 
@@ -44,7 +44,7 @@ public class RandomKey {
         String result = "";
         for (final byte element : mac_data)
         {
-            result += Integer.toString((element & 0xff) + 0x100, 16).substring(1);
+            result += String.format("%02x", element);
         }
         System.out.println(result);
         return 1;

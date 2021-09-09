@@ -20,7 +20,7 @@ public class Game {
             }
         }
 
-        new Rules(args.length ,args);
+        new Rules(args.length, args);
         Rules.playRound();
     }
 }

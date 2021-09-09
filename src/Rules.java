@@ -12,7 +12,7 @@ public class Rules {
     private static int[] sequence = RandomKey.getSequence();
     private static int num;
 
-    Rules(int num, String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
+    Rules(int num, String[] args) {
         this.args = args;
         this.num = num;
         new RandomKey(this.num);
@@ -83,7 +83,7 @@ public class Rules {
             if (numUser == 0) break;
             if (numUser == sequence[i]) {
                 System.out.println("draw, Computer move: " + args[sequence[i] - 1]);
-                System.out.println("Key: " + RandomKey.getKey());
+                System.out.println("HMAC key: " + RandomKey.getKey());
                 System.out.println("---------------");
                 System.out.print("HMAC: ");
                 draws++;
