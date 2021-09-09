@@ -24,7 +24,7 @@ public class RandomKey {
         randomHMAC(key, seq);
     }
 
-    RandomKey(int num) throws NoSuchAlgorithmException, InvalidKeyException {
+    RandomKey(int num) {
         SecureRandom random = new SecureRandom();
         SecureRandom random2 = new SecureRandom();
 
@@ -33,8 +33,6 @@ public class RandomKey {
             this.seq += sequence[i];
             this.key += random2.nextInt( 9);
         }
-        System.out.print("HMAC on this game: ");
-        randomHMAC(key, seq);
     }
 
     public static int randomHMAC(String key, String seq) throws NoSuchAlgorithmException, InvalidKeyException {

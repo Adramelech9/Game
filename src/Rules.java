@@ -7,25 +7,14 @@ public class Rules {
     public static int countUser = 0;
     public static int countPC = 0;
     public static int draws = 0;
+    public static String[] args;
 
     private static int[] sequence = RandomKey.getSequence();
     private static int num;
 
-    Rules(String num) throws NoSuchAlgorithmException, InvalidKeyException {
-
-        try {
-            this.num = Integer.parseInt(num);
-        } catch (NumberFormatException e) {
-            System.out.println("You made a mistake entering the number. Try again.");
-            this.num = getInt();
-        }
-        System.out.println("Enter an odd number of possible combinations");
-        while (this.num < 3 || this.num % 2 != 1 || this.num > 9) {
-            if (this.num < 3) System.out.println("The number must be at least 3");
-            if (this.num % 2 != 1) System.out.println("Error. Enter an odd number");
-            if (this.num > 9) System.out.println("The number must be no more than 9");
-            this.num = getInt();
-        }
+    Rules(int num, String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
+        this.args = args;
+        this.num = num;
         new RandomKey(this.num);
     }
     public static int getInt(){
@@ -45,11 +34,15 @@ public class Rules {
         int numUser;
         int num1;
         int num2;
-        System.out.println("You need select a positive number and < " + (num + 1));
-        System.out.println("press 911 to learn the rules or 0 for exit");
+       System.out.println("Available moves:");
+       for (int j = 0; j < num; j++) {
+           System.out.println(j + 1 + " - " + args[j]);
+       }
+       System.out.println("0 - exit\n911 - learn the rules");
+       System.out.print("HMAC: ");
         for (int i = 0; i < 128; i++) {
             new RandomKey(i, 1);
-            System.out.println("Enter your move: №" + (i + 1));
+            System.out.println("Enter your move: " + (i + 1));
             if(scanner.hasNextInt()) {
 
             } else {
@@ -59,7 +52,7 @@ public class Rules {
             }
             numUser = scanner.nextInt();
             if (numUser == 911) {
-                new TableHelp(num);
+                new TableHelp(num, args);
                 i--;
                 continue;
             }
@@ -69,13 +62,18 @@ public class Rules {
                 System.out.println("or 911 for help");
                 numUser = getInt();
                 if (numUser == 911) {
-                    new TableHelp(num);
+                    new TableHelp(num, args);
                     i--;
                     continue;
                 }
             if (numUser < 0 || numUser > num ) {
-                System.out.println("try again");
+                System.out.println("try again. 911 for help");
                 numUser = getInt();
+                if (numUser == 911) {
+                    new TableHelp(num, args);
+                    i--;
+                    continue;
+                }
                 if (numUser < 0 || numUser > num) {
                     System.out.println("attempts ended");
                     break;
@@ -83,14 +81,11 @@ public class Rules {
                 }
             }
             if (numUser == 0) break;
-            if (numUser == '?') {
-                new TableHelp(num);
-                continue;
-            }
             if (numUser == sequence[i]) {
-                System.out.println("draw, PC chose " + sequence[i]);
+                System.out.println("draw, Computer move: " + args[sequence[i] - 1]);
                 System.out.println("Key: " + RandomKey.getKey());
                 System.out.println("---------------");
+                System.out.print("HMAC: ");
                 draws++;
                 continue;
             } if (numUser - sequence[i] > num / 2 || sequence[i] - numUser > num / 2) {
@@ -107,9 +102,11 @@ public class Rules {
                 countUser++;
                 System.out.println("You win!");
             }
-            System.out.println("You selected " + numUser + ", PC " + sequence[i]);
-            System.out.println("Key: " + RandomKey.getKey());
-            System.out.println("---------------");
+            System.out.println("You selected: " + args[numUser - 1] + ", Computer selected: " + args[sequence[i] - 1]);
+            System.out.println("HMAC key: " + RandomKey.getKey());
+            System.out.println("---------------------------------------------");
+            System.out.print("HMAC: ");
+
 
         }
         System.out.println("score: " + countUser + " WINS | " + countPC + " LOSE | " + draws + " DRAWS");
